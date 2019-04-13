@@ -82,11 +82,11 @@ contactSchema.pre("save",function(next){
                 next()
             })
             .catch(function(err){
-                // contact.gender = ""
-                // contact.geo.lat = ""
-                // contact.geo.lng = ""
-                // next()
-                return Promise.reject(err.message)
+                contact.gender = ""
+                contact.geo.lat = ""
+                contact.geo.lng = ""
+                next()
+                //return Promise.reject(err.message)
             })
         
     }else{
