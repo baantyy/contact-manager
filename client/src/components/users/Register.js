@@ -7,7 +7,8 @@ class Register extends React.Component {
         this.state = {
             username: '', 
             email: '',
-            password: ''
+            password: '',
+            errors: {}
         }
     }
 
@@ -28,12 +29,11 @@ class Register extends React.Component {
 
         axios.post('http://localhost:3005/users/register', formData)
             .then(response => {
-                console.log(response.data)
                 if(response.data.errors) {
-                    // console.log(response.data.errors) 
-                    console.log(response.data.errors)
+                    this.setState(() => ({
+                        errors: response.data.errors
+                    }))
                 } else {
-                // programmatically change from one to another component
                     this.props.history.push('/login')
                 }   
             })
@@ -57,6 +57,7 @@ class Register extends React.Component {
                                        placeholder="your username"
                                 />
                             </label>
+                            { this.state.errors.username && <p className="text-danger">{ this.state.errors.username.message }</p> }
                         </div>
 
                         <div className="form-group">
@@ -70,6 +71,7 @@ class Register extends React.Component {
                                     placeholder="your email"
                                 />
                             </label>
+                            { this.state.errors.email && <p className="text-danger">{ this.state.errors.email.message }</p> }
                         </div>
 
                         <div className="form-group">
@@ -83,10 +85,10 @@ class Register extends React.Component {
                                        placeholder="your password"
                                 />
                             </label>
+                            { this.state.errors.password && <p className="text-danger">{ this.state.errors.password.message }</p> }
                         </div>
 
-                        <input type="submit" className="btn btn-primary" />
-                       
+                        <input type="submit" className="btn btn-primary" />                       
 
                     </form>
                 </div>

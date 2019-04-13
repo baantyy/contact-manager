@@ -6,6 +6,8 @@ import Home from './components/Home'
 import Register from './components/users/Register'
 import Login from './components/users/Login'
 
+import ContactList from './components/contact/List'
+
 class App extends Component {
   constructor(props) {
     super(props) 
@@ -13,6 +15,21 @@ class App extends Component {
       isAuthenticated: false 
     }
   }
+
+  componentDidMount(){
+    if(localStorage.getItem('token')){
+      this.setState(() => ({
+        isAuthenticated: true
+      }))
+    }
+  }
+
+  handleAuthentication = () => {
+    this.setState(() => ({
+      isAuthenticated: true
+    }))
+  }
+
   render() {
     return (
       <BrowserRouter>
@@ -29,7 +46,7 @@ class App extends Component {
                 { this.state.isAuthenticated ? (
                   <React.Fragment>
                     <Link to="/contacts" className="nav-item nav-link">Contacts</Link>
-                    <Link to="/users/logout" className="nav-item nav-link">Logout</Link>
+                    <Link to="/logout" className="nav-item nav-link">Logout</Link>
                   </React.Fragment>
                 ) : (
                   <React.Fragment>
@@ -44,7 +61,11 @@ class App extends Component {
 
           <Route path="/" component={Home} exact={true} />
           <Route path="/register" component={Register} exact={true} />
-          <Route path="/login" component={Login} exact={true} />
+          <Route path="/login" render={(props) => {
+            return <Login {...props} handleAuthentication={this.handleAuthentication} />
+          }} />
+
+          <Route path="/contacts" component={ContactList} exact={true} />
          
         </div>
       </BrowserRouter>

@@ -34,10 +34,11 @@ router.post("/login",function(req,res){
             }
         })
         .then(function(token){
-            res.setHeader("x-auth",token).send({})
+            //res.setHeader("x-auth",).send({})
+            res.send({token})
         })
-        .catch(function(err){
-            res.send(err)
+        .catch(function(errors){
+            res.send({errors})
         })
 })
 
