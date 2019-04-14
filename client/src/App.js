@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { BrowserRouter, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Route, Link, withRouter } from 'react-router-dom'
+import axios from 'axios'
 
 import Home from './components/Home'
 
 import Register from './components/users/Register'
 import Login from './components/users/Login'
-import Logout from './components/users/Logout'
 
 import ContactList from './components/contact/List'
 import ContactAdd from './components/contact/Add'
@@ -61,13 +61,26 @@ class App extends Component {
           </nav>
 
           <Route path="/" component={Home} exact={true} />
+
           <Route path="/register" component={Register} exact={true} />
           <Route path="/login" render={(props) => {
             return <Login {...props} handleAuthentication={this.handleAuthentication} />
           }} />
           <Route path="/logout" render={(props) => {
-            return <Logout {...props} handleAuthentication={this.handleAuthentication} />
+            axios.delete('http://localhost:3005/users/logout', {
+              headers: {
+                'x-auth': localStorage.getItem('token')
+              }
+            })
+            .then(res => {
+              props.history.push('/login')
+              this.setState(() => ({
+                isAuthenticated: false
+              }))
+              localStorage.removeItem('token')
+            })
           }} />
+          
           <Route path="/contacts" component={ContactList} exact={true} />
           <Route path="/contacts/new" component={ContactAdd} exact={true} />
          

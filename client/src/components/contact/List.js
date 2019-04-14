@@ -25,7 +25,7 @@ class ContactList extends React.Component {
     render() {
         return (
             <div>
-                <h2>Listing Contacts</h2>
+                <h2 className="mb-3">Listing Contacts</h2>
                 { this.state.contacts.length === 0 ? (
                     <div>
                         No contacts found. Add your first contact 
@@ -36,6 +36,7 @@ class ContactList extends React.Component {
                             <tr>
                                 <th>Id</th>
                                 <th>Name</th>
+                                <th>Email</th>
                                 <th>Mobile</th>
                                 <th>Action</th>
                             </tr>
@@ -46,9 +47,10 @@ class ContactList extends React.Component {
                                     <tr key={index}>
                                         <td>{index + 1}</td>
                                         <td>{contact.name}</td>
+                                        <td>{contact.email}</td>
                                         <td>{contact.mobile}</td>
                                         <td>
-                                            <button className="btn btn-info">Edit</button>
+                                            <Link to={`contacts/${contact._id}/edit`} className="btn btn-info">Edit</Link>
                                         </td>
                                     </tr>
                                 )
