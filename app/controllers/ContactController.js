@@ -6,9 +6,7 @@ const { authUser } = require("../middlewares/auth")
 
 // localhost:3000/contacts
 router.get('/', authUser, function (req, res) {
-    Contact.find({
-        user: req.user._id
-    })
+    Contact.find({ user: req.user._id }).sort({name: 1})
         .then(function (contacts) {
             res.send(contacts)
         })
@@ -30,7 +28,7 @@ router.post('/', authUser, function (req, res) {
             })
         })
         .catch(function (err) {
-            res.send(err)
+            res.send({err})
         })
 })
 

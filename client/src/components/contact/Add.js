@@ -10,9 +10,12 @@ class ContactAdd extends React.Component {
                 'x-auth' : localStorage.getItem('token')
             }
         })
-        .then(response => {
-            console.log(response.data)
-            this.props.history.push('/contacts')
+        .then(response => {            
+            if(response.data.err){
+                console.log(response.data.err)
+            }else{
+                this.props.history.push('/contacts')
+            }
         })
     }
 

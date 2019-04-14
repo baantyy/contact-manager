@@ -27,11 +27,12 @@ router.post("/login",function(req,res){
 
     User.findByCredentials(body.email,body.password)
         .then(function(user){
-            if(user.tokens.length < 3){
-                return user.generateToken()
-            }else{
-                res.send({notice: "Already logged in 3 times"})
-            }
+            // if(user.tokens.length < 3){
+            //     return user.generateToken()
+            // }else{
+            //     res.send({notice: "Already logged in 3 times"})
+            // }
+            return user.generateToken()
         })
         .then(function(token){
             //res.setHeader("x-auth",).send({})
@@ -54,10 +55,10 @@ router.delete("/logout",authUser,function(req,res){
     //User.findByIdAndUpdate(user._id,{$pull: {tokens: {token: token}}})
     User.findByIdAndUpdate(user._id,{ tokens: [] })
         .then(function(){
-            res.send("successfully logged out")
+            res.send({notice:"successfully logged out"})
         })
-        .catch(function(err){
-            res.send(err)
+        .catch(function(errors){
+            res.send({errors})
         })
 })
 

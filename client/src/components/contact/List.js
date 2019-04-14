@@ -19,6 +19,7 @@ class ContactList extends React.Component {
                 this.setState(() => ({
                     contacts: response.data
                 }))
+                console.log(this.state.contacts)
             })
     }
     render() {
@@ -30,13 +31,30 @@ class ContactList extends React.Component {
                         No contacts found. Add your first contact 
                     </div>
                 ) : (
-                    <ul>
-                        { this.state.contacts.map(contact => {
-                            return (
-                                <li key={contact._id}> {contact.name } </li>
-                            )
-                        })}
-                    </ul>
+                    <table className="table table-bordered table-stripped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Mobile</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            { this.state.contacts.map((contact,index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>{contact.name}</td>
+                                        <td>{contact.mobile}</td>
+                                        <td>
+                                            <button className="btn btn-info">Edit</button>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>                        
+                    </table>
                 ) } 
                 <Link to="/contacts/new" className="btn btn-primary">Add Contact</Link>
             </div>
