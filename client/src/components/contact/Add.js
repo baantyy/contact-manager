@@ -21,11 +21,9 @@ class ContactAdd extends React.Component {
 
     render() {
         return (
-            <div className="row">
-                <div className="col-md-6 offset-3"> 
-                    <h2>Add Contact</h2>
-                    <ContactForm handleSubmit={this.handleSubmit} />
-                </div> 
+            <div>
+                <h2>Add Contact</h2>
+                <ContactForm handleSubmit={this.handleSubmit} />
             </div>
         )
     }
