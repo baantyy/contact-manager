@@ -63,7 +63,7 @@ class Register extends React.Component {
                         <div className="form-group">
                             <label>
                                 email
-                                <input type="text"
+                                <input type="text" 
                                     name="email"
                                     value={this.state.email}
                                     onChange={this.handleChange}

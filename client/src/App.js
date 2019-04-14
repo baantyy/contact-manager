@@ -5,8 +5,10 @@ import Home from './components/Home'
 
 import Register from './components/users/Register'
 import Login from './components/users/Login'
+import Logout from './components/users/Logout'
 
 import ContactList from './components/contact/List'
+import ContactAdd from './components/contact/Add'
 
 class App extends Component {
   constructor(props) {
@@ -54,7 +56,6 @@ class App extends Component {
                     <Link to="/login" className="nav-item nav-link">Login</Link>
                   </React.Fragment>
                 )}
-              
               </div>
             </div>
           </nav>
@@ -64,8 +65,11 @@ class App extends Component {
           <Route path="/login" render={(props) => {
             return <Login {...props} handleAuthentication={this.handleAuthentication} />
           }} />
-
+          <Route path="/logout" render={(props) => {
+            return <Logout {...props} handleAuthentication={this.handleAuthentication} />
+          }} />
           <Route path="/contacts" component={ContactList} exact={true} />
+          <Route path="/contacts/new" component={ContactAdd} exact={true} />
          
         </div>
       </BrowserRouter>
