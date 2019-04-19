@@ -22,13 +22,10 @@ router.post('/', authUser, function (req, res) {
     contact.user = req.user._id
     contact.save()
         .then(function (contact) {
-            res.send({
-                contact,
-                notice: 'successfully created a contact'
-            })
+            res.send(contact)
         })
-        .catch(function (err) {
-            res.send({err})
+        .catch(function (errors) {
+            res.send(errors)
         })
 })
 
@@ -88,8 +85,8 @@ router.put('/:id', authUser, function (req, res) {
                 res.status('404').send({})
             }
         })
-        .catch(function (err) {
-            res.send(err)
+        .catch(function (errors) {
+            res.send(errors)
         })
 })
 

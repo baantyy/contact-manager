@@ -13,11 +13,16 @@ class ContactShow extends React.Component {
     componentDidMount() {
         const id = this.props.match.params.id 
         axios.get(`http://localhost:3005/contacts/${id}`, {
-            headers: {
-                'x-auth': localStorage.getItem('token')
-            }
-        })
-            .then(response => this.setState(() => ({ contact: response.data })))
+                headers: {
+                    'x-auth': localStorage.getItem('token')
+                }
+            })
+            .then(response => {
+                this.setState(() => ({ 
+                    contact: response.data 
+                }))
+                document.title = this.state.contact.name
+            })
     }
 
     handleRemove = () => {
@@ -37,19 +42,24 @@ class ContactShow extends React.Component {
 
     render(){
         return (
-            <div>
-                <h2 className="mb-3"> { this.state.contact.name } </h2>
-                <p> <b>Mobile</b> : { this.state.contact.mobile } </p>
-                <p> <b>Email</b> : { this.state.contact.email } </p> 
-                <p> <b>Gender</b> : { this.state.contact.gender } </p> 
-                <p> <b>City</b> : { this.state.contact.city } </p> 
+            <div className="contactShow">
+                <div className="container">
+                    <h2> { this.state.contact.name } </h2>
 
-                <Link className="btn btn-primary mr-2" to="/contacts"> back </Link>
-                <Link className="btn btn-warning mr-2" to={`/contacts/edit/${this.state.contact._id}`}> edit </Link>
+                    <ul>
+                        <li><b>Mobile</b> : { this.state.contact.mobile }</li>
+                        <li><b>Email</b> : { this.state.contact.email }</li>
+                        <li><b>Gender</b> : { this.state.contact.gender }</li>
+                        <li><b>City</b> : { this.state.contact.city }</li>
+                    </ul>
 
-                <button className="btn btn-danger" onClick={() => {
-                    this.handleRemove()
-                }}>remove</button>
+                    <Link className="btn btn-primary" to="/contacts"> back </Link>
+                    <Link className="btn btn-warning" to={`/contacts/edit/${this.state.contact._id}`}> edit </Link>
+
+                    <button className="btn btn-danger" onClick={() => {
+                        this.handleRemove()
+                    }}>remove</button>
+                </div>
             </div> 
         )
     }

@@ -1,0 +1,125 @@
+/*start header*/
+.nav-item.nav-link{
+    font-size: 14px;
+}
+/*end header*/
+
+/*start login + register*/
+.loginBlock{
+    width: 100%;
+    max-width: 550px;
+    margin: 50px auto;
+    box-shadow: 0 0 20px 0 #dddddd;
+    padding: 50px;
+}
+.loginBlock h2{
+    font-size: 25px;
+    margin-bottom: 25px;
+    text-transform: capitalize;
+}
+.loginBlock input{
+    margin-bottom: 10px;
+    border-radius: 0;
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+    font-size: 14px;
+    padding: 10px 15px;
+    height: auto;
+}
+.loginBlock p{
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.loginBlock button{
+    font-size: 14px;
+    border-radius: 0;
+    box-shadow: none !important;
+}
+.alert{
+    border-radius: 0;
+}
+/*end login + register*/
+
+/*start contact list*/
+.contactList{
+    margin: 30px 0;
+}
+.contactList h2{
+    font-size: 25px;
+    margin: 0 0 20px;
+}
+.contactList p.empty{
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+.contactList table{
+    font-size: 14px;
+}
+.contactList a{
+    font-size: 14px;
+    border-radius: 0;
+}
+.contactList td.gender{
+    text-transform: capitalize;
+}
+/*end contact list*/
+
+/*start contact form*/
+.contactForm{
+    width: 100%;
+    max-width: 550px;
+    margin: 50px auto;
+    box-shadow: 0 0 20px 0 #dddddd;
+    padding: 50px;
+}
+.contactForm h2{
+    font-size: 25px;
+    margin-bottom: 25px;
+    text-transform: capitalize;
+}
+.contactForm input{
+    margin-bottom: 10px;
+    border-radius: 0;
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+    font-size: 14px;
+    padding: 10px 15px;
+    height: auto;
+}
+.contactForm button{
+    font-size: 14px;
+    border-radius: 0;
+    box-shadow: none !important;
+}
+.contactForm p.text-danger{
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+/*start contact form*/
+
+/*start contact show*/
+.contactShow{
+    margin: 30px 0;
+}
+.contactShow h2{
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+.contactShow ul{
+    margin-bottom: 20px;
+    padding: 0 0 0 20px;
+    line-height: 30px;
+    font-size: 14px;
+}
+.contactShow li b{
+    width: 65px;
+    display: inline-block;
+}
+.contactShow a,
+.contactShow button{
+    border-radius: 0;
+    font-size: 14px;
+    text-transform: capitalize;
+    margin: 0 4px 0 0;
+}
+/*end contact show*/

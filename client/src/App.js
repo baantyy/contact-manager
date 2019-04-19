@@ -37,30 +37,33 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div className="container">
-
-          <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
-            <a className="navbar-brand" href="/">Contact App</a>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-              <div className="navbar-nav">
-                <Link to="/" className="nav-item nav-link">Home</Link>
-                { this.state.isAuthenticated ? (
-                  <React.Fragment>
-                    <Link to="/contacts" className="nav-item nav-link">Contacts</Link>
-                    <Link to="/logout" className="nav-item nav-link">Logout</Link>
-                  </React.Fragment>
-                ) : (
-                  <React.Fragment>
-                    <Link to ="/register" className="nav-item nav-link">Register</Link>
-                    <Link to="/login" className="nav-item nav-link">Login</Link>
-                  </React.Fragment>
-                )}
+        <React.Fragment>
+          <header>
+            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+              <div className="container">
+                <Link className="navbar-brand" to="/">Contact App</Link>
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                  <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+                  <div className="navbar-nav ml-auto">
+                    <Link to="/" className="nav-item nav-link">Home</Link>
+                    { this.state.isAuthenticated ? (
+                      <React.Fragment>
+                        <Link to="/contacts" className="nav-item nav-link">Contacts</Link>
+                        <Link to="/logout" className="nav-item nav-link">Logout</Link>
+                      </React.Fragment>
+                    ) : (
+                      <React.Fragment>
+                        <Link to="/login" className="nav-item nav-link">Login</Link>
+                        <Link to ="/register" className="nav-item nav-link">Register</Link>
+                      </React.Fragment>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
-          </nav>
+            </nav>
+          </header>
 
           <Switch>
 
@@ -90,9 +93,9 @@ class App extends Component {
             <Route path="/contacts/:id" component={ContactShow} exact={true} />
             <Route path="/contacts/edit/:id" component={ContactEdit} exact={true} />
 
-          </Switch>
-         
-        </div>
+          </Switch>     
+            
+        </React.Fragment>
       </BrowserRouter>
     )
   }

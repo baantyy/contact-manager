@@ -8,7 +8,8 @@ class Register extends React.Component {
             username: '', 
             email: '',
             password: '',
-            errors: {}
+            errors: {},
+            submitBtn: 'Register'
         }
     }
 
@@ -26,73 +27,71 @@ class Register extends React.Component {
             email: this.state.email,
             password: this.state.password
         }
-
+        this.setState(() => ({
+            submitBtn: ''
+        }))
         axios.post('http://localhost:3005/users/register', formData)
             .then(response => {
-                if(response.data.errors) {
-                    this.setState(() => ({
-                        errors: response.data.errors
-                    }))
-                } else {
+                if(response.data.user){
                     this.props.history.push('/login')
+                } else {
+                    console.log(response.data)
+                    if(response.data.errors){
+                        this.setState(() => ({
+                            errors: response.data.errors,
+                            submitBtn: 'Register'
+                        }))
+                    }
+                    
                 }   
             })
     }
 
+    componentDidMount(){
+        document.title = "Register"
+    }
+
     render(){
         return (
-            <div className="row">
-                <div className="col-md-6 offset-3">
+            <div className="container">
+                <div className="loginBlock">
                     <h2>Register with us </h2>
                     <form onSubmit={this.handleSubmit}>
 
-                        <div className="form-group">
-                            <label>
-                                username 
-                                <input type="text" 
-                                       name="username"
-                                       value={this.state.username} 
-                                       onChange={this.handleChange} 
-                                       className="form-control" 
-                                       placeholder="your username"
-                                />
-                            </label>
-                            { this.state.errors.username && <p className="text-danger">{ this.state.errors.username.message }</p> }
-                        </div>
+                        <input type="text" 
+                            name="username"
+                            value={this.state.username} 
+                            onChange={this.handleChange} 
+                            className="form-control" 
+                            placeholder="Username"
+                        />
+                        { this.state.errors.username && <p className="text-danger">{ this.state.errors.username.message }</p> }
+                       
+                        <input type="text" 
+                            name="email"
+                            value={this.state.email}
+                            onChange={this.handleChange}
+                            className="form-control"
+                            placeholder="Email"
+                        />
+                        { this.state.errors.email && <p className="text-danger">{ this.state.errors.email.message }</p> }
+                     
+                        <input type="password"
+                            name="password"
+                            value={this.state.password}
+                            onChange={this.handleChange}
+                            className="form-control"
+                            placeholder="Password"
+                        />
+                        { this.state.errors.password && <p className="text-danger">{ this.state.errors.password.message }</p> }
 
-                        <div className="form-group">
-                            <label>
-                                email
-                                <input type="text" 
-                                    name="email"
-                                    value={this.state.email}
-                                    onChange={this.handleChange}
-                                    className="form-control"
-                                    placeholder="your email"
-                                />
-                            </label>
-                            { this.state.errors.email && <p className="text-danger">{ this.state.errors.email.message }</p> }
-                        </div>
-
-                        <div className="form-group">
-                            <label>
-                                password
-                                <input type="password"
-                                       name="password"
-                                       value={this.state.password}
-                                       onChange={this.handleChange}
-                                       className="form-control"
-                                       placeholder="your password"
-                                />
-                            </label>
-                            { this.state.errors.password && <p className="text-danger">{ this.state.errors.password.message }</p> }
-                        </div>
-
-                        <input type="submit" className="btn btn-primary" />                       
+                        <button type="submit" className="btn btn-primary">
+                            {this.state.submitBtn === 'Register' ? 'Register' : <i className="fa fa-spin fa-spinner"></i>}
+                        </button>                    
 
                     </form>
-                </div>
-            </div> 
+                </div> 
+            </div>
         )
     }
 }

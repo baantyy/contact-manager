@@ -1,4 +1,6 @@
 const mongoose = require("mongoose")
+const uniqueValidator = require('mongoose-unique-validator')
+
 const validator = require("validator")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
@@ -8,28 +10,29 @@ const Schema = mongoose.Schema
 const userSchema = new Schema({
     username: {
         type: String,
-        minlength: 4,
+        minlength: [4, 'username is short'],
+        maxlength: [128, 'username is too long'],
         unique: true,
-        required: true
+        required: [true, 'username is required']
     },
     email: {
         type: String,
         unique: true,
-        required: true,
+        required: [true, 'email is required'],
         validate: {
             validator: function(value){
                 return validator.isEmail(value)
             },
             message: function(){
-                return "Email is invalid"
+                return "email is invalid"
             }
         }
     },
     password: {
         type: String,
-        minlength: 6,
-        maxlength: 128,
-        required: true
+        minlength: [6, 'password is too short'],
+        maxlength: [128, 'password is too long'],
+        required: [true, 'password is required']
     },
     tokens: [
         {
@@ -59,15 +62,13 @@ const userSchema = new Schema({
     }
 })
 
+userSchema.plugin(uniqueValidator, { message: '{PATH} already exists' })
+
 //pre hooks
 userSchema.pre("save",function(next){
     const user = this
     if(user.isNew){
         user.loginCount = 0
-        // user.ip = {
-        //     currentLoginIP: String,
-        //     lastLoginIP: ""
-        // }
         function encryptPassword(){
             return bcrypt.genSalt(10)
                 .then(function(salt){
@@ -101,15 +102,15 @@ userSchema.pre("save",function(next){
 //static methods - check credentials
 userSchema.statics.findByCredentials = function(email,password){
     const User = this
-    return User.findOne({email})
+    return User.findOne({$or:[{email: email},{username: email}]})
             .then(function(user){
                 if(!user){
-                    return Promise.reject("invalid email")
+                    return Promise.reject("invalid credentials")
                 }else{
                     return bcrypt.compare(password,user.password)
                         .then(function(result){
                             if(!result){
-                                return Promise.reject("invalid password")
+                                return Promise.reject("invalid credentials")
                             }else{                                
                                 if(user.allowAccess){
                                     return Promise.resolve(user)

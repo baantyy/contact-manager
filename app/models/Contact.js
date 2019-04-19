@@ -7,19 +7,21 @@ const contactSchema = new Schema({
     //user input
     name: {
         type: String,
-        required: true
+        required: [true, 'name is required']
     },
     email: {
-        type: String
+        type: String,
+        required: [true, 'email is required']
     },
     mobile: {
         type: String,
-        required: true,
-        minlength: 10,
-        maxlength: 10
+        required: [true, 'mobile is required'],
+        minlength: [10, 'mobile is invalid'],
+        maxlength: [10, 'mobile is invalid']
     }, 
     city: {
-        type: String
+        type: String,
+        required: [true, 'city is required']
     },
 
     // generate
@@ -86,7 +88,6 @@ contactSchema.pre("save",function(next){
                 contact.geo.lat = ""
                 contact.geo.lng = ""
                 next()
-                //return Promise.reject(err.message)
             })
         
     }else{

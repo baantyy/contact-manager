@@ -7,8 +7,7 @@ class ContactForm extends React.Component {
             name: props.contact ? props.contact.name : '' ,
             email: props.contact ? props.contact.email : '',
             mobile: props.contact ? props.contact.mobile : '', 
-            city: props.contact ? props.contact.city : '',
-            errors: props.contact ? props.contact.errors : {}
+            city: props.contact ? props.contact.city : ''
         }
     }
 
@@ -34,69 +33,47 @@ class ContactForm extends React.Component {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    <div className="form-row">
-                        <div className="col-md-4">
-                            Name
-                        </div>
-                        <div className="col-md-4 mb-2">
-                            <input type="text"
-                                    name="name"
-                                    value={this.state.name}
-                                    onChange={this.handleChange}
-                                    className="form-control"
-                                    placeholder="Name"
-                                />
-                        </div>
-                        <div className="col-md-4">
-                            {/* {this.state.errors.name && <p className="text text-danger"> {this.state.errors.name.message} </p>} */}
-                        </div>
-                        <div className="col-md-4">
-                            Mobile
-                        </div>
-                        <div className="col-md-4 mb-2">
-                            <input type="text"
-                                    name="mobile"
-                                    value={this.state.mobile}
-                                    onChange={this.handleChange}
-                                    className="form-control"
-                                    placeholder="Mobile"
-                                />
-                        </div>
-                        <div className="col-md-4">
-                            {/* {this.state.errors.mobile && <p className="text text-danger"> {this.state.errors.mobile.message} </p>} */}
-                        </div>
-                        <div className="col-md-4">
-                            Email
-                        </div>
-                        <div className="col-md-4 mb-2">
-                            <input type="email"
-                                    name="email"
-                                    value={this.state.email}
-                                    onChange={this.handleChange}
-                                    className="form-control"
-                                    placeholder="Email"
-                                />
-                        </div>
-                        <div className="col-md-4">
-                            {/* {this.state.errors.email && <p className="text text-danger"> {this.state.errors.email.message} </p>} */}
-                        </div>
-                        <div className="col-md-4">
-                            City
-                        </div>
-                        <div className="col-md-4 mb-2">
-                            <input type="text"
-                                    name="city"
-                                    value={this.state.city}
-                                    onChange={this.handleChange}
-                                    className="form-control"
-                                    placeholder="City"
-                                />
-                        </div>
-                        <div className="col-md-4">
-                            {/* {this.state.errors.city && <p className="text text-danger"> {this.state.errors.city.message} </p>} */}
-                        </div>
-                    </div>
-                    <input type="submit" className="btn btn-primary" />
+
+                    <input type="text"
+                        name="name"
+                        value={this.state.name}
+                        onChange={this.handleChange}
+                        className="form-control"
+                        placeholder="Name"
+                    />
+                    {this.props.errors.name && <p className="text-danger"> {this.props.errors.name.message} </p>}
+
+                    <input type="text"
+                        name="mobile"
+                        value={this.state.mobile}
+                        onChange={this.handleChange}
+                        className="form-control"
+                        placeholder="Mobile"
+                    />
+                    {this.props.errors.mobile && <p className="text-danger"> {this.props.errors.mobile.message} </p>}
+
+                    <input type="email"
+                        name="email"
+                        value={this.state.email}
+                        onChange={this.handleChange}
+                        className="form-control"
+                        placeholder="Email"
+                    />
+                    {this.props.errors.email && <p className="text-danger"> {this.props.errors.email.message} </p>}
+
+                    <input type="text"
+                        name="city"
+                        value={this.state.city}
+                        onChange={this.handleChange}
+                        className="form-control"
+                        placeholder="City"
+                    />
+                    {this.props.errors.city && <p className="text-danger"> {this.props.errors.city.message} </p>}
+ 
+                    <button type="submit" className="btn btn-primary">
+                        {this.props.submitBtn !== '' ? this.props.submitBtn : <i className="fa fa-spin fa-spinner"></i>}
+                    </button>
+                            
                 </form>
             </div>
         )

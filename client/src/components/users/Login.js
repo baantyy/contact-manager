@@ -7,7 +7,8 @@ class Login extends React.Component {
         this.state = {
             email: '',
             password: '',
-            errors: ''
+            errors: '',
+            submitBtn: 'Login'
         }
     }
 
@@ -17,20 +18,20 @@ class Login extends React.Component {
             email: this.state.email,
             password: this.state.password
         }
-
+        this.setState(() => ({
+            submitBtn: ''
+        }))
         axios.post('http://localhost:3005/users/login', formData)
             .then(response => {
                 if (response.data.errors) {
                     this.setState(() => ({
                         errors: response.data.errors,
-                        password: ''
+                        password: '',
+                        submitBtn: 'Login'
                     }))
                 } else {
-                    // write this to localStorage 
                     localStorage.setItem('token', response.data.token)
-                    // redirect to contacts page 
                     this.props.history.push('/contacts')
-                    // change the navigation links = update the state of isAuthenticated in the parent component
                     this.props.handleAuthentication(true)
                 }
             })
@@ -43,41 +44,37 @@ class Login extends React.Component {
         }))
     }
 
+    componentDidMount(){
+        document.title = "Login"
+    }
+
     render() {
-        // console.log(this.props)
         return (
-            <div className="row">
-                <div className="col-md-6 offset-3">
+            <div className="container">
+                <div className="loginBlock">
                     <h2>Login </h2>
                     <form onSubmit={this.handleSubmit}>
-                        { this.state.errors && <p className="alert alert-danger">{ this.state.errors}</p> }
-                        <div className="form-group">
-                            <label>
-                                email
-                                <input type="text"
-                                    name="email"
-                                    value={this.state.email}
-                                    onChange={this.handleChange}
-                                    className="form-control"
-                                    placeholder="your email"
-                                />
-                            </label>
-                        </div>
-
-                        <div className="form-group">
-                            <label>
-                                password
-                                <input type="password"
-                                    name="password"
-                                    value={this.state.password}
-                                    onChange={this.handleChange}
-                                    className="form-control"
-                                    placeholder="your password"
-                                />
-                            </label>
-                        </div>
-
-                        <input type="submit" className="btn btn-primary" />
+                        { this.state.errors && <p className="alert alert-danger">{ this.state.errors }</p> }
+                        
+                        <input type="text"
+                            name="email"
+                            value={this.state.email}
+                            onChange={this.handleChange}
+                            className="form-control"
+                            placeholder="Username / Email"
+                        />
+                    
+                        <input type="password"
+                            name="password"
+                            value={this.state.password}
+                            onChange={this.handleChange}
+                            className="form-control"
+                            placeholder="Password"
+                        />
+                            
+                        <button type="submit" className="btn btn-primary">
+                            {this.state.submitBtn === 'Login' ? 'Login' : <i className="fa fa-spin fa-spinner"></i>}
+                        </button>
                     </form>
                 </div>
             </div>

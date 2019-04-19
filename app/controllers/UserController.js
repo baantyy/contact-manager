@@ -8,12 +8,10 @@ const { userAccess } = require("../middlewares/access")
 //localhost:3000/users/register
 router.post("/register",function(req,res){
     const body = _.pick(req.body,["username","email","password"])
-    //whitelist parameters
-    //delete body.roles
     const user = new User(body)
     user.save()
         .then(function(user){
-            res.send(user)
+            res.send({user})
         })
         .catch(function(err){
             res.send(err)
@@ -23,7 +21,6 @@ router.post("/register",function(req,res){
 //localhost:3000/users/login
 router.post("/login",function(req,res){
     const body = _.pick(req.body,["email","password"])
-    //body.ip = req.headers['x-real-ip'] || req.connection.remoteAddress
 
     User.findByCredentials(body.email,body.password)
         .then(function(user){
@@ -35,7 +32,6 @@ router.post("/login",function(req,res){
             return user.generateToken()
         })
         .then(function(token){
-            //res.setHeader("x-auth",).send({})
             res.send({token})
         })
         .catch(function(errors){
